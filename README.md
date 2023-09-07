@@ -1,6 +1,8 @@
 # sentinel-template-terraform
 
-[![Run Sentinel unit tests](https://github.com/hashicorp-services/sentinel-bootstrap-tfe/actions/workflows/sentinel-tests.yml/badge.svg)](https://github.com/hashicorp-services/sentinel-bootstrap-tfe/actions/workflows/sentinel-tests.yml)
+[![Run Sentinel unit tests](https://github.com/kardell2006g/sentinel-template-terraform-main/actions/workflows/sentinel-tests.yml/badge.svg)](https://github.com/kardell2006g/sentinel-template-terraform-main/actions/workflows/sentinel-tests.yml)
+
+
 
 Sentinel starter repo with directory structure and Sentinel functions built out intended to be shared directly with customers.
 

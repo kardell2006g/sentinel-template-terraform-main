@@ -1,0 +1,31 @@
+# Policy to require that certain tags are present on all AWS resources that support them. This is updated to work with Provider supplied tags
+
+# Import tfplan-functions.sentinel with alias "plan"
+import "tfplan-functions" as plan
+
+# Import aws-functions.sentinel with alias "aws"
+import "aws-functions" as aws
+
+# List of required tags
+param mandatory_tags default ["Name", "env"]
+
+# Get all AWS Resources with tags_all
+all_aws_resources_with_tags_all = aws.find_resources_with_tags_all()
+
+# Filter to AWS resources with violations
+# Warnings will be printed for all violations since the last parameter is true
+violating_aws_resources_with_missing_tags = plan.filter_attribute_not_contains_list(all_aws_resources_with_tags_all, "tags_all", mandatory_tags, true)
+
+# tags_all will not be listed if a resource has no tags assigned to it, however the tags attribute will be null.
+# Get all AWS Resources with standard tags
+all_aws_resources_using_tags = aws.find_resources_with_standard_tags()
+
+# Check if the tags field is null
+# Filter to AWS resources with violations
+# Warnings will be printed for all violations since the last parameter is true
+violating_aws_resources_no_tags = plan.filter_attribute_is_value(all_aws_resources_using_tags, "tags", "null", true)
+
+# Main rule
+main = rule {
+	length(violating_aws_resources_with_missing_tags["messages"]) is 0 and length(violating_aws_resources_no_tags["messages"]) is 0 
+}
